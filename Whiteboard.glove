@@ -1,0 +1,317 @@
+// Wii-Whiteboard GloovePIE Script
+// by Jochen Zaunert, JAN-2008
+//
+// there is also a calibration image (JPG) for this script
+// if you don't have it right now go to my homepage and download it
+//
+// feel free to test it!
+// comments and improments are very welcome
+//
+// you can contact me by mail:  j g z 7 (at) g m x . n e t
+//
+// 
+// 
+// project homepage: http://www.zaunert.de/jochenz/wii
+// (there is also a a samll demonstation video)
+//
+// Remeber: Display the Calibartion image as "full screen size"!
+// or just set it as desktop background :-)
+//
+// IMPORTANT:
+// This script is designed for a resolution of 1280 x 1024
+// if your resolution ist different you'll need to modify the script
+// and the calibration image...
+
+
+
+
+if starting then
+var.leercounter = 0
+end if
+
+if keyboard.Space = true then
+   wait 500ms
+   if var.leercounter = 3 then
+    var.x4 = var.dot1x
+    var.y4 = var.dot1y
+    Inc(var.leercounter)
+    Say "Point 4. OK. calibration done"
+
+
+var.r1=70
+var.r2=1210
+var.r3=70
+var.r4=1210
+var.h1=954
+var.h2=954
+var.h3=70
+var.h4=70
+
+
+// there must be a better solution to solve a 8x8 matrix with gloovepie...
+// but I don't how... therefore I use manula mode... :-(
+
+// fill martix... 64 variables... oh no...
+
+var.m11=-1
+var.m12=-1
+var.m13=-1
+var.m14=-1
+var.m15=0
+var.m16=0
+var.m17=0
+var.m18=0
+
+var.m21=-var.x1
+var.m22=-var.x2
+var.m23=-var.x3
+var.m24=-var.x4
+var.m25=0
+var.m26=0
+var.m27=0
+var.m28=0
+
+var.m31=-var.y1
+var.m32=-var.y2
+var.m33=-var.y3
+var.m34=-var.y4
+var.m35=0
+var.m36=0
+var.m37=0
+var.m38=0
+
+var.m41=0
+var.m42=0
+var.m43=0
+var.m44=0
+var.m45=-1
+var.m46=-1
+var.m47=-1
+var.m48=-1
+
+var.m51=0
+var.m52=0
+var.m53=0
+var.m54=0
+var.m55=-var.x1
+var.m56=-var.x2
+var.m57=-var.x3
+var.m58=-var.x4
+
+var.m61=0
+var.m62=0
+var.m63=0
+var.m64=0
+var.m65=-var.y1
+var.m66=-var.y2
+var.m67=-var.y3
+var.m68=-var.y4
+
+
+var.m71=var.x1*var.r1
+var.m72=var.x2*var.r2
+var.m73=var.x3*var.r3
+var.m74=var.x4*var.r4
+var.m75=var.x1*var.h1
+var.m76=var.x2*var.h2
+var.m77=var.x3*var.h3
+var.m78=var.x4*var.h4
+
+var.m81=var.y1*var.r1
+var.m82=var.y2*var.r2
+var.m83=var.y3*var.r3
+var.m84=var.y4*var.r4
+var.m85=var.y1*var.h1
+var.m86=var.y2*var.h2
+var.m87=var.y3*var.h3
+var.m88=var.y4*var.h4
+
+
+var.bb1=-var.r1
+var.bb2=-var.r2
+var.bb3=-var.r3
+var.bb4=-var.r4
+var.bb5=-var.h1
+var.bb6=-var.h2
+var.bb7=-var.h3
+var.bb8=-var.h4
+
+
+// here starts the calculation...
+// gauß-elimination
+var.m22=-var.m22+var.m21
+var.m32=-var.m32+var.m31
+var.m42=-var.m42+var.m41
+var.m52=-var.m52+var.m51
+var.m62=-var.m62+var.m61
+var.m72=-var.m72+var.m71
+var.m82=-var.m82+var.m81
+var.bb2=-var.bb2+var.bb1
+var.m12=0
+
+
+var.m23=-var.m23+var.m21
+var.m33=-var.m33+var.m31
+var.m43=-var.m43+var.m41
+var.m53=-var.m53+var.m51
+var.m63=-var.m63+var.m61
+var.m73=-var.m73+var.m71
+var.m83=-var.m83+var.m81
+var.bb3=-var.bb3+var.bb1
+var.m13=0
+
+
+var.m24=-var.m24+var.m21
+var.m34=-var.m34+var.m31
+var.m44=-var.m44+var.m41
+var.m54=-var.m54+var.m51
+var.m64=-var.m64+var.m61
+var.m74=-var.m74+var.m71
+var.m84=-var.m84+var.m81
+var.bb4=-var.bb4+var.bb1
+var.m14=0
+
+
+var.m33=-var.m33/var.m23*var.m22+var.m32
+var.m43=-var.m43/var.m23*var.m22+var.m42
+var.m53=-var.m53/var.m23*var.m22+var.m52
+var.m63=-var.m63/var.m23*var.m22+var.m62
+var.m73=-var.m73/var.m23*var.m22+var.m72
+var.m83=-var.m83/var.m23*var.m22+var.m82
+var.bb3=-var.bb3/var.m23*var.m22+var.bb2
+var.m23=0
+
+
+var.m34=-var.m34/var.m24*var.m22+var.m32
+var.m44=-var.m44/var.m24*var.m22+var.m42
+var.m54=-var.m54/var.m24*var.m22+var.m52
+var.m64=-var.m64/var.m24*var.m22+var.m62
+var.m74=-var.m74/var.m24*var.m22+var.m72
+var.m84=-var.m84/var.m24*var.m22+var.m82
+var.bb4=-var.bb4/var.m24*var.m22+var.bb2
+var.m24=0
+
+
+var.m44=-var.m44/var.m34*var.m33+var.m43
+var.m54=-var.m54/var.m34*var.m33+var.m53
+var.m64=-var.m64/var.m34*var.m33+var.m63
+var.m74=-var.m74/var.m34*var.m33+var.m73
+var.m84=-var.m84/var.m34*var.m33+var.m83
+var.bb4=-var.bb4/var.m34*var.m33+var.bb3
+var.m34=0
+// the last calculation returs a line which can be easyly used afterwards...
+
+
+
+
+var.m56=-var.m56+var.m55
+var.m66=-var.m66+var.m65
+var.m76=-var.m76+var.m75
+var.m86=-var.m86+var.m85
+var.bb6=-var.bb6+var.bb5
+var.m46=0
+
+
+
+var.m57=-var.m57+var.m55
+var.m67=-var.m67+var.m65
+var.m77=-var.m77+var.m75
+var.m87=-var.m87+var.m85
+var.bb7=-var.bb7+var.bb5
+var.m47=0
+
+var.m58=-var.m58+var.m55
+var.m68=-var.m68+var.m65
+var.m78=-var.m78+var.m75
+var.m88=-var.m88+var.m85
+var.bb8=-var.bb8+var.bb5
+var.m48=0
+
+
+
+
+var.m67=-var.m67/var.m57*var.m56+var.m66
+var.m77=-var.m77/var.m57*var.m56+var.m76
+var.m87=-var.m87/var.m57*var.m56+var.m86
+var.bb7=-var.bb7/var.m57*var.m56+var.bb6
+var.m57=0
+
+
+var.m68=-var.m68/var.m58*var.m56+var.m66
+var.m78=-var.m78/var.m58*var.m56+var.m76
+var.m88=-var.m88/var.m58*var.m56+var.m86
+var.bb8=-var.bb8/var.m58*var.m56+var.bb6
+var.m58=0
+
+
+
+var.m78=-var.m78/var.m68*var.m67+var.m77
+var.m88=-var.m88/var.m68*var.m67+var.m87
+var.bb8=-var.bb8/var.m68*var.m67+var.bb7
+var.m68=0
+
+
+// special case in the 4th line
+var.m88=-var.m88/var.m78*var.m74+var.m84
+var.bb8=-var.bb8/var.m78*var.m74+var.bb4
+var.m78=0
+
+
+// finally, the 8 calculations for the 8 parameters
+var.b3=var.bb8/var.m88
+var.a3=(var.bb4-(var.m84*var.b3))/var.m74
+var.b2=(var.bb7-(var.m87*var.b3+var.m77*var.a3))/var.m67
+var.a2=(var.bb6-(var.m86*var.b3+var.m76*var.a3+var.m66*var.b2))/var.m56
+var.c2=(var.bb5-(var.m85*var.b3+var.m75*var.a3+var.m65*var.b2+var.m55*var.a2))/var.m45
+
+var.b1=(var.bb3-(var.m83*var.b3+var.m73*var.a3+var.m63*var.b2+var.m53*var.a2+var.m43*var.c2))/var.m33
+var.a1=(var.bb2-(var.m82*var.b3+var.m72*var.a3+var.m62*var.b2+var.m52*var.a2+var.m42*var.c2+var.m32*var.b1))/var.m22
+var.c1=(var.bb1-(var.m81*var.b3+var.m71*var.a3+var.m61*var.b2+var.m51*var.a2+var.m41*var.c2+var.m31*var.b1+var.m21*var.a1))/var.m11
+
+
+
+
+
+
+
+   end if
+   if var.leercounter = 2 then
+    var.x3 = var.dot1x
+    var.y3 = var.dot1y
+    Inc(var.leercounter)
+    Say "Point 3. OK"
+   end if
+   if var.leercounter = 1 then
+    var.x2 = var.dot1x
+    var.y2 = var.dot1y
+    Inc(var.leercounter)
+    Say "Point 2. OK"
+   end if
+   if var.leercounter = 0 then
+    var.x1 = var.dot1x
+    var.y1 = var.dot1y
+    Inc(var.leercounter)
+    Say "Point 1. OK"
+   end if
+end if
+
+
+// hey, this is just the simple main script - the essential
+
+if wiimote.dot1vis then
+  var.dot1x = wiimote.dot1x
+  var.dot1y = wiimote.dot1y
+  var.groesse1 = wiimote.dot1size
+  var.x_fb=Wiimote1.dot1x
+  var.y_fb=Wiimote1.dot1y
+  var.corrx = (var.a1*var.x_fb+var.b1*var.y_fb+var.c1)/(var.a3*var.x_fb+var.b3*var.y_fb+1)
+  var.corry = (var.a2*var.x_fb+var.b2*var.y_fb+var.c2)/(var.a3*var.x_fb+var.b3*var.y_fb+1)
+  mouse.x = var.corrx/1280
+  mouse.y = 1-(var.corry/1024)
+
+end if
+
+if (wiimote1.dot1vis = true) and (wiimote1.dot2vis = false) then mouse.leftbutton = true else mouse.leftbutton = false
+
+// this is the fist try to get more than one mouse button...
+if (wiimote1.dot1vis = true) and (wiimote1.dot2vis= true) then mouse.rightbutton = true else mouse.RightButton = false
