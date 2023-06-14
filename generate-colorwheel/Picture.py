@@ -1,5 +1,5 @@
 from Common import *
-import Image
+from PIL import Image
 
 #Picture.py by pbsds
 #Give credit to pbsds if used!
@@ -184,8 +184,8 @@ class Picture():
 		for Pixel in self.PixelData:
 			temp.append(temp2(Pixel,4))
 		temp = "".join(temp)
-		
-		temp = Image.fromstring("RGBA", (self.Width, self.Height), temp)
+
+		temp = Image.frombytes("RGBA", (self.Width, self.Height), temp)
 		FileType = OutputPath[OutputPath.rfind(".")+1:]
 		temp.save(OutputPath,FileType)
 	#Private:

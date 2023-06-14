@@ -15,7 +15,7 @@
       inherit system;
       pkgs = nixpkgs.legacyPackages.${system};
     });
-    mkPythonEnv = pkgs: with pkgs; python.withPackages (ps: with ps; [
+    mkPythonEnv = pkgs: extraPackages: with pkgs; python.withPackages (ps: with ps; [
       pygame
       #numpy
       (buildPythonPackage {
@@ -26,7 +26,7 @@
         nativeBuildInputs = cwiid.nativeBuildInputs ++ cwiid.buildInputs;
         doCheck = false;
       })
-    ]);
+    ] ++ extraPackages);
   in {
     inherit inputs;
 
@@ -34,7 +34,7 @@
       wiiteboard = pkgs.writeScriptBin "wiiteboard" ''
         #!${pkgs.bash}/bin/bash
         export "PYTHONPATH=${./.}:$PYTHONPATH"
-        exec ${mkPythonEnv pkgs}/bin/python ${./main.py}
+        exec ${mkPythonEnv pkgs []}/bin/python ${./main.py}
       '';
       default = wiiteboard;
     });
@@ -47,7 +47,7 @@
 
     devShells = forAllSystems ({ pkgs, ... }: {
       default = pkgs.mkShell {
-        buildInputs = [ (mkPythonEnv pkgs) ];
+        buildInputs = [ (mkPythonEnv pkgs [ pkgs.pythonPackages.pillow ]) ];
       };
     });
 

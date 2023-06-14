@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 import Picture, colorsys, math
 
 out = Picture.Picture(201, 201, 0xFFFFFFFF)

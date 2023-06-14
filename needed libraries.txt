@@ -1,7 +1,0 @@
-To run this you'll need:
--cwiid
--pygame
-
-install:
-sudo apt-get install python-pygame libcwiid1 lswm wmgui wminput
-
