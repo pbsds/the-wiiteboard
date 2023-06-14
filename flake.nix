@@ -33,8 +33,8 @@
     packages = forAllSystems ({ pkgs, ... }: rec {
       wiiteboard = pkgs.writeScriptBin "wiiteboard" ''
         #!${pkgs.bash}/bin/bash
-        export "PYTHONPATH=${./.}:$PYTHONPATH"
-        exec ${mkPythonEnv pkgs []}/bin/python ${./main.py}
+        cd ${./.}
+        exec ${mkPythonEnv pkgs []}/bin/python main.py
       '';
       default = wiiteboard;
     });
